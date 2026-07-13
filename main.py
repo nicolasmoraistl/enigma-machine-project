@@ -6,55 +6,38 @@ from enigma import Rotor, Plugboard, Keyboard, Reflector, Enigma
 
 # For the enigma configuration, I've chose the german standard model.
 
-rotor1 = Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q", 12)
-rotor2 = Rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE", "F", 12)
-rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "W", 12)
-rotor4 = Rotor("ESOVPZJAYQUIRHXLNFTGKDCMWB", "K", 12)
-rotor5 = Rotor("VZBRGITYUPSDNHLXAWMJQOFECK", "A", 12)
+rotor1 = Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+rotor2 = Rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE", "E")
+rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "V")
+rotor4 = Rotor("ESOVPZJAYQUIRHXLNFTGKDCMWB", "J")
+rotor5 = Rotor("VZBRGITYUPSDNHLXAWMJQOFECK", "Z")
 reflectA = Reflector('EJMZALYXVBWFCRQUONTSPIKHGD')
 reflectB = Reflector('YRUHQSLDPXNGOKMIEBFZCWVJAT')
 reflectC = Reflector('FVPJIAOYEDRZXWGCTKUQSBNMHL')
-PB = Plugboard(['AR', 'GK', 'OX'])
-KB = Keyboard()
-"""
-# We've "typed" a letter
-letter = 'G'
+plugboard = Plugboard(['CS', 'MF', 'LV'])
+keyboard = Keyboard()
 
-# Enigma doesn't read anything, only electric signal.
-signal = KB.finding_signal(letter)
+def main() -> None:
+    # Complete enigma scheme.
+    # This first prototype will aim in its logic, a friendly visualization will be afterwards.
+    # These configurations can be changed whenever you want.
+    enigma_machine = Enigma(plugboard, rotor1, rotor2, rotor3, reflectB, keyboard)
 
-# The enigma workflow for one letter, it's only missing the rotor's rotate  scheme.
+    enigma_machine.set_key('KEY')
 
-signal = PB.forward(signal)
+    enigma_machine.set_rings((1, 1, 2))
 
-signal = rotor1.forward(signal)
+    message = input()
 
-signal = rotor2.forward(signal)
+    message = message.upper()
 
-signal = rotor4.forward(signal)
+    ciphertext = ''
 
-signal = reflectB.reflect(signal)
-
-signal = rotor4.backward(signal)
-
-signal = rotor2.backward(signal)
-
-signal = rotor1.backward(signal)
-
-signal = PB.backward(signal)
-
-letter = KB.finding_letter(signal)
+    for letter in message:
+        ciphertext += enigma_machine.encryption_char(letter)
 
 
-print(letter)
-"""
+    print(ciphertext)
 
 
-# Rotating mechanism
-print(rotor1.left)
-print(rotor1.right)
-
-rotor1.rotate_to_letter('G')
-
-print(rotor1.left)
-print(rotor1.right)
+main()
