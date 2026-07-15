@@ -167,8 +167,8 @@ class Rotor:
         """
         It'll rotate until the letter from the argument becomes the first letter of self.left
         """
-        n = ALPHABET.find(letter)
-        self.rotate(n)
+        while self.left[0] != letter:
+            self.rotate()
 
     def set_ring(self, n):
         # Each ring will make the rotation moves backward instead of forward.
