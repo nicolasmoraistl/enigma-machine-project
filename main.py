@@ -6,11 +6,11 @@ import random
 
 # For the enigma configuration, I've chose the german standard model.
 
-rotor1 = Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
-rotor2 = Rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE", "E")
-rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "V")
-rotor4 = Rotor("ESOVPZJAYQUIRHXLNFTGKDCMWB", "J")
-rotor5 = Rotor("VZBRGITYUPSDNHLXAWMJQOFECK", "Z")
+rotor1 = Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q", 'I')
+rotor2 = Rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE", "E", 'II')
+rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "V", 'III')
+rotor4 = Rotor("ESOVPZJAYQUIRHXLNFTGKDCMWB", "J", 'IV')
+rotor5 = Rotor("VZBRGITYUPSDNHLXAWMJQOFECK", "Z", 'V')
 reflectA = Reflector('EJMZALYXVBWFCRQUONTSPIKHGD')
 reflectB = Reflector('YRUHQSLDPXNGOKMIEBFZCWVJAT')
 reflectC = Reflector('FVPJIAOYEDRZXWGCTKUQSBNMHL')
@@ -36,8 +36,7 @@ def encrypt_decrypt(machine:Enigma, message:str, rings, keys):
 
     enigma_text = ''
 
-    for letter in message:
-        enigma_text += machine.encryption_char(letter)
+    enigma_text = ''.join([machine.encryption_char(letter) for letter in message])
 
     return enigma_text
 
@@ -87,7 +86,7 @@ def set_random_configs() -> tuple:
     
         pair = chr(pair1) + chr(pair2)
         pairs.append(pair)
-        plugboard = Plugboard(pairs)
+    plugboard = Plugboard(pairs)
 
     return (rotor_left, rotor_mid, rotor_right, rings, keys, reflector, plugboard)
 
